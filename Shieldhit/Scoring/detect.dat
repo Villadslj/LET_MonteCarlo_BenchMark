@@ -1,0 +1,41 @@
+Geometry Mesh            # 1-dimensional Cartesian scoring geometry along Z, integrating only the center of the beam
+    Name MyMesh_Z_small
+    X -1  1    1
+    Y -1  1    1
+    Z  0.0  20.0   300
+
+Geometry Mesh            # 2-dimensional Cartesian scoring geometry in the YZ plane
+    Name MyMesh_YZ
+    X -5.0  5.0    1
+    Y -5.0  5.0    100
+    Z  0.0  20.0   300
+
+Geometry Mesh            # 2-dimensional Cartesian scoring geometry in the YX plane
+    Name MyMesh_YX
+    X -3.0  3.0    100
+    Y -3.0  3.0    100
+    Z  0.0  1.0   1
+
+
+    
+Output
+    Filename msh_z1.bdo
+    Geo MyMesh_Z_small         # geometry for integrating all ions laterally
+    Quantity Dose              # dose from all ions
+    Quantity DLET
+    Quantity TLET
+
+Output
+    Filename msh_yz.bdo       # this will output as default binary .bdo format
+    Geo MyMesh_YZ
+    Quantity Dose
+    Quantity Fluence 
+
+
+Output
+    Filename msh_yx.bdo        # this will output as default binary .bdo format
+    Geo MyMesh_YX
+    Quantity Dose
+    Quantity Fluence
+
+

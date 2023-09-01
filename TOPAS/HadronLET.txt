@@ -1,0 +1,163 @@
+# Include beam information
+
+########################################
+# beam
+########################################
+s:So/MySource/Type                     = "Beam"
+s:So/MySource/Component                = "BeamPosition"
+s:So/MySource/BeamParticle             = "proton"
+i:So/MySource/NumberOfHistoriesInRun   = 50000
+d:Ge/MySource/RotX=180. deg
+d:So/MySource/BeamEnergy = 160 MeV
+u:So/MySource/BeamEnergySpread = 0.02
+s:So/MySource/BeamPositionDistribution = "Gaussian" # Flat or Gaussian
+s:So/MySource/BeamPositionCutoffShape = "Ellipse" # Point, Ellipse, Rectangle or Isotropic
+d:So/MySource/BeamPositionSpreadX = 2.0 cm
+d:So/MySource/BeamPositionSpreadY = 2.0 cm
+d:So/MySource/BeamPositionCutoffX = 5. cm # X extent of position (if Flat or Gaussian)
+d:So/MySource/BeamPositionCutoffY = 5. cm # Y extent of position (if Flat or Gaussian)
+s:So/MySource/BeamAngularDistribution = "Gaussian" # None, Flat or Gaussian
+d:So/MySource/BeamAngularCutoffX = 90. deg # X cutoff of angular distrib (if Flat or Gaussian)
+d:So/MySource/BeamAngularCutoffY = 90. deg # Y cutoff of angular distrib (if Flat or Gaussian)
+d:So/MySource/BeamAngularSpreadX = 0.0032 rad # X angular distribution (if Gaussian)
+d:So/MySource/BeamAngularSpreadY = 0.0032 rad # Y angular distribution (if Gaussian)
+d:So/MySource/BeamPositionZ= Ge/WaterPhantom/HLZ + 1.5 cm
+
+s:outdir = "output/"
+########################################
+# Physics
+########################################
+# sv:Ph/Default/Modules = 1 "g4em-standard_opt4"
+i:Ts/NumberOfThreads = 0
+# sv:Ph/Default/Modules = 2 "proton" "photons", "electron"
+########################################
+# Sequence control
+########################################
+b:Ts/PauseBeforeSequence = "F"
+i:Ts/ShowHistoryCountAtInterval = 1000 # how often to print history count to the console
+# If set to 0, history count will never be printed
+b:Ts/ShowHistoryCountOnSingleLine = "FALSE" # Make count reuse a single line of console
+i:Tf/Verbosity = 0
+
+
+########################################
+# Graphics
+########################################
+b:Ts/PauseBeforeQuit = "False"
+
+########################################
+# Geometry
+########################################
+
+d:Ge/World/HLX = 1. m
+d:Ge/World/HLY = 1. m
+d:Ge/World/HLZ = 1. m
+s:Ge/World/Material = "Vacuum"
+
+# Water Tank / Phantom
+s:Ge/WaterPhantom/Parent 		= "World"
+s:Ge/WaterPhantom/Type   		= "TsBox"
+s:Ge/WaterPhantom/Material		= "G4_WATER"
+d:Ge/WaterPhantom/HLX 			= 5.0 cm
+d:Ge/WaterPhantom/HLY 			= 5.0 cm
+d:Ge/WaterPhantom/HLZ 			= 20.0 cm
+d:Ge/WaterPhantom/TransX		= 0.0 cm
+d:Ge/WaterPhantom/TransY		= 0.0 cm
+d:Ge/WaterPhantom/TransZ		= 0.0 cm
+d:Ge/WaterPhantom/RotX			= 0. deg
+d:Ge/WaterPhantom/RotY			= 0. deg
+d:Ge/WaterPhantom/RotZ			= 0. deg
+s:Ge/WaterPhantom/Color      = "blue"
+
+########################################
+# Scoring Geometry
+########################################
+
+s:Ge/ScoringZBox/Parent     = "WaterPhantom"
+s:Ge/ScoringZBox/Type       = "TsBox"
+b:Ge/ScoringZBox/IsParallel = "TRUE"
+d:Ge/ScoringZBox/HLX        = 1 cm
+d:Ge/ScoringZBox/HLY        = 1 cm
+d:Ge/ScoringZBox/HLZ        = 15 cm
+s:Ge/ScoringZBox/Color      = "green"
+i:Ge/ScoringZBox/XBins      = 1
+i:Ge/ScoringZBox/YBins      = 1
+i:Ge/ScoringZBox/ZBins      = 300
+d:Ge/ScoringZBox/TransZ    = Ge/WaterPhantom/HLZ - Ge/ScoringZBox/HLZ cm
+d:Ge/ScoringZBox/RotZ=180. deg
+
+s:Ge/ScoringXYBox/Parent     = "WaterPhantom"
+s:Ge/ScoringXYBox/Type       = "TsBox"
+b:Ge/ScoringXYBox/IsParallel = "TRUE"
+d:Ge/ScoringXYBox/HLX        = 3 cm
+d:Ge/ScoringXYBox/HLY        = 3 cm
+d:Ge/ScoringXYBox/HLZ        = 1 cm
+s:Ge/ScoringXYBox/Color      = "green"
+i:Ge/ScoringXYBox/XBins      = 100
+i:Ge/ScoringXYBox/YBins      = 100
+i:Ge/ScoringXYBox/ZBins      = 1
+d:Ge/ScoringXYBox/TransZ    = Ge/WaterPhantom/HLZ - Ge/ScoringZBox/HLZ cm
+d:Ge/ScoringXYBox/RotZ=180. deg
+
+s:Ge/ScoringZYBox/Parent     = "WaterPhantom"
+s:Ge/ScoringZYBox/Type       = "TsBox"
+b:Ge/ScoringZYBox/IsParallel = "TRUE"
+d:Ge/ScoringZYBox/HLX        = 5 cm
+d:Ge/ScoringZYBox/HLY        = 5 cm
+d:Ge/ScoringZYBox/HLZ        = 10 cm
+s:Ge/ScoringZYBox/Color      = "green"
+i:Ge/ScoringZYBox/XBins      = 1
+i:Ge/ScoringZYBox/YBins      = 100
+i:Ge/ScoringZYBox/ZBins      = 300
+d:Ge/ScoringZYBox/TransZ    = Ge/WaterPhantom/HLZ - Ge/ScoringZBox/HLZ cm
+d:Ge/ScoringZYBox/RotZ=180. deg
+
+########################################
+# Scoring
+########################################
+
+s:Sc/Dose/Quantity                       = "DoseToMedium"
+s:Sc/Dose/Component                      = "ScoringZBox"
+b:Sc/Dose/OutputToConsole                = "FALSE"
+s:Sc/Dose/IfOutputFileAlreadyExists      = "Overwrite"
+b:Sc/Dose/PropagateToChildren = "True"
+s:Sc/Dose/OutputFile =  outdir + "Dose"
+
+s:Sc/DoseXY/Quantity                       = "DoseToMedium"
+s:Sc/DoseXY/Component                      = "ScoringXYBox"
+b:Sc/DoseXY/OutputToConsole                = "FALSE"
+s:Sc/DoseXY/IfOutputFileAlreadyExists      = "Overwrite"
+b:Sc/DoseXY/PropagateToChildren = "True"
+s:Sc/DoseXY/OutputFile =  outdir + "DoseXY"
+
+s:Sc/DoseZY/Quantity                       = "DoseToMedium"
+s:Sc/DoseZY/Component                      = "ScoringZYBox"
+b:Sc/DoseZY/OutputToConsole                = "FALSE"
+s:Sc/DoseZY/IfOutputFileAlreadyExists      = "Overwrite"
+b:Sc/DoseZY/PropagateToChildren = "True"
+s:Sc/DoseZY/OutputFile =  outdir + "DoseZY"
+
+s:Sc/DPLET/Quantity                       = "ProtonLET"
+s:Sc/DPLET/Component                      = "ScoringZBox"
+b:Sc/DPLET/OutputToConsole                = "FALSE"
+s:Sc/DPLET/IfOutputFileAlreadyExists      = "Overwrite"
+b:Sc/DPLET/PropagateToChildren = "True"
+s:Sc/DPLET/WeightBy                     = "dose" # or dose
+s:Sc/DPLET/OutputFile =  outdir + "DPLET"
+
+s:Sc/DHadronLET/Quantity                       = "myHadronLET"
+s:Sc/DHadronLET/Component                      = "ScoringZBox"
+b:Sc/DHadronLET/OutputToConsole                = "FALSE"
+s:Sc/DHadronLET/IfOutputFileAlreadyExists      = "Overwrite"
+b:Sc/DHadronLET/PropagateToChildren            = "True"
+s:Sc/DHadronLET/WeightBy                      = "dose" # or dose
+s:Sc/DHadronLET/OutputFile =  outdir + "DHadronLET"
+
+s:Sc/DHadronLET_Protons/Quantity                       = "myHadronLET"
+s:Sc/DHadronLET_Protons/Component                      = "ScoringZBox"
+b:Sc/DHadronLET_Protons/OutputToConsole                = "FALSE"
+s:Sc/DHadronLET_Protons/IfOutputFileAlreadyExists      = "Overwrite"
+b:Sc/DHadronLET_Protons/PropagateToChildren = "True"
+s:Sc/DHadronLET_Protons/WeightBy                     = "dose" # or dose
+s:Sc/DHadronLET_Protons/OutputFile =  outdir + "DHadronLET_Protons"
+sv:Sc/DHadronLET_Protons/OnlyIncludeParticlesNamed = 1 "proton"
